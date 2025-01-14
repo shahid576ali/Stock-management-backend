@@ -14,7 +14,7 @@ A simple authentication system using Express.js with sign-up and sign-in APIs se
 
 - [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/)
-- MongoDB (optional, for user data storage)
+- MongoDB
 
 ## Setup
 
