@@ -39,7 +39,7 @@ const signUp = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.json({ success: false, message: "Failed to submit" });
+    res.json({ success: false, message: "Internal server Error" });
   }
 };
 
