@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import userRouter from './routes/usersRoutes.js';
 const app = express();
-
+const port = process.env.PORT || 4000;
 
 app.use(express.json());
 dotenv.config();
@@ -22,6 +22,6 @@ app.get('/',(req,res)=>{
 
 app.use('/user',userRouter)
 
-app.listen(4000,()=>{
-    console.log("server is running on : http://localhost:4000");
+app.listen(port,()=>{
+    console.log(`server is running on : http://localhost:${port}`);
 })
