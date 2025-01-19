@@ -44,29 +44,23 @@ const signUp = async (req, res) => {
 };
 
 const verifyToken = (req, res, next) => {
-  // Extract token from cookies
   const token = req.cookies?.authToken;
-
-  // Check if token exists
+  
   if (!token) {
     return res.status(401).json({ success: false, message: "No token provided" });
   }
 
   try {
-    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Attach decoded user info to the request object
     req.user = decoded;
     next();
   } catch (err) {
-    // Handle verification errors
     if (err.name === "TokenExpiredError") {
       return res.status(401).json({ success: false, message: "Token expired" });
     } else if (err.name === "JsonWebTokenError") {
       return res.status(401).json({ success: false, message: "Invalid token" });
     } else {
-      // Unexpected error
       return res.status(500).json({ success: false, message: "Internal server error" });
     }
   }
