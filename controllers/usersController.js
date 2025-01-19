@@ -45,6 +45,7 @@ const signUp = async (req, res) => {
 
 const verifyToken = (req, res, next) => {
   const token = req.cookies?.authToken;
+  console.log(token);
   
   if (!token) {
     return res.status(401).json({ success: false, message: "No token provided" });
@@ -92,10 +93,11 @@ const signIn = async (req, res) => {
     const token = jwt.sign(payload, process.env.JWT_SECRET, options);
 
     res.cookie("authToken", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production", 
-      maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 3600 * 1000,
-      sameSite: "Strict",
+      httpOnly: true,  // Prevents JS from accessing the cookie
+      secure: process.env.NODE_ENV === "production",  // Use secure flag only in production (OnRender automatically uses HTTPS)
+      maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 3600 * 1000,  // Expiry based on "rememberMe"
+      sameSite: 'None',  // Required for cross-site cookies
+      domain: '.onrender.com',  // Set to your domain or use a wildcard for subdomains
     });
 
     return res.json({
