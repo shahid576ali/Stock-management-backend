@@ -43,30 +43,6 @@ const signUp = async (req, res) => {
   }
 };
 
-const verifyToken = (req, res, next) => {
-  const token = req.cookies?.authToken;
-  console.log(token);
-  
-  if (!token) {
-    return res.status(401).json({ success: false, message: "No token provided" });
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    req.user = decoded;
-    next();
-  } catch (err) {
-    if (err.name === "TokenExpiredError") {
-      return res.status(401).json({ success: false, message: "Token expired" });
-    } else if (err.name === "JsonWebTokenError") {
-      return res.status(401).json({ success: false, message: "Invalid token" });
-    } else {
-      return res.status(500).json({ success: false, message: "Internal server error" });
-    }
-  }
-};
-
 const signIn = async (req, res) => {
   const { email, password, rememberMe } = req.body;
 
@@ -147,4 +123,4 @@ const userDetails = async (req, res) => {
 };
 
 
-export { signUp, signIn, logout, verifyToken, userDetails };
+export { signUp, signIn, logout, userDetails };
