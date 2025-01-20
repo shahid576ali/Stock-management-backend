@@ -12,7 +12,7 @@ dotenv.config();
 app.use(cookieParser());
 connectDB();
 app.use(cors({
-    origin: 'http://localhost:5173' || 'https://sales-stock-one.vercel.app', 
+    origin: 'https://sales-stock-one.vercel.app' && 'http://localhost:5173', 
     credentials: true, 
   }));
 
